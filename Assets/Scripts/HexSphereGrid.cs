@@ -4,15 +4,17 @@ using System.Collections.Generic;
 
 public class HexSphereGrid : MonoBehaviour {
 	public GameObject prefab;
+	public GameObject arrowPrefab;
 	public GameObject centerPoint;
 	public int count = 10;
 	public float size = 20;
+	GameObject arrow;
 
-	List<List<GameObject>> grid = new List<List<GameObject>>();
+	public List<GameObject> grid = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
-		generateGrid ();
+		//generateGrid ();
 	}
 	
 	// Update is called once per frame
@@ -21,13 +23,22 @@ public class HexSphereGrid : MonoBehaviour {
 	}
 
 	[ContextMenu("Create Points")]
-	void generateGrid(){
+	public void generateGrid(){
 		List<Vector3> points = UniformPointsOnSphere (count, size);
 		for(var i=0; i<count; i++) {
-			var g = Instantiate(prefab, transform.position+points[i], Quaternion.identity) as GameObject;
+			GameObject g = Instantiate(prefab, transform.position+points[i], Quaternion.identity) as GameObject;
 			g.transform.parent = transform;
 			g.transform.LookAt(centerPoint.transform);
-			g.GetComponent<HexTile>().hexID = count;
+//			if (i == 0 || i == count-1){
+//				g.transform.localPosition += g.transform.forward * 2f;
+//				
+//			}
+
+			if(i==0){
+				arrow = Instantiate(arrowPrefab, g.transform.position, g.transform.rotation) as GameObject;
+				arrow.transform.localPosition -= arrow.transform.forward * .5f;
+			}
+
 
 			grid.Add(g);
 		}

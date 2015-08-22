@@ -17,53 +17,30 @@ namespace AssemblyCSharp
 {
 	public class HexTile : MonoBehaviour
 	{
-//		public float elevation = 0;
-//		public float colorChangeDuration = 5;
-//		public float colorChangeSmoothness = 0.02f;
-//		public Color currentColor = Color.white;
-//		public Color [] colors;
 		public GameObject destructibleHexTile;
-		List<Building> buildings = new List<Building>();
+		public List<Building> buildings = new List<Building>();
+		private Color startColor;
 		public int hexID = -1;
 
 		void Start(){
 			GameObject parentGrid = GameObject.Find ("Grid");
 			transform.parent = parentGrid.transform;
-//			parentGrid.transform.parent = transform;
-//			StartCoroutine("LerpColor");
 		}
 
 		void Update(){
 
 		}
 
-//		IEnumerator LerpColor(){
-//			float learpProgress = 0;
-//			float increment = colorChangeSmoothness / colorChangeDuration;
-//
-//			while (learpProgress < 1) {
-//				currentColor = Color.Lerp (colors[0], colors[1], learpProgress);
-//				learpProgress += increment;
-//				yield return new WaitForSeconds(colorChangeSmoothness);
-//			}
-//			return true;
-//		}
-
 		void OnMouseOver(){
 			//transform.localPosition += transform.forward * 0.1f;
 			Debug.Log (hexID);
 
 		}
-//		}
-//
-//		void OnMouseOut(){
-//			Vector3 newPosition = new Vector3 (0, 2, 0);
-//			transform.position -= newPosition;
-//		}
-//
+
 		void OnMouseDown(){
 			Debug.Log ("click");
-			destroyTile();
+
+			//destroyTile();
 
 		}
 
@@ -71,6 +48,15 @@ namespace AssemblyCSharp
 			Destroy(gameObject);
 			Instantiate (destructibleHexTile, transform.position, transform.rotation);
 
+		}
+
+		void OnMouseEnter(){
+			startColor = gameObject.GetComponent<Renderer> ().material.color;
+			gameObject.GetComponent<Renderer> ().material.color = Color.yellow;
+		}
+
+		void OnMouseExit(){
+			gameObject.GetComponent<Renderer> ().material.color = startColor;
 		}
 
 	}
