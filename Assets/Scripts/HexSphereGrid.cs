@@ -27,6 +27,9 @@ public class HexSphereGrid : MonoBehaviour {
 			var g = Instantiate(prefab, transform.position+points[i], Quaternion.identity) as GameObject;
 			g.transform.parent = transform;
 			g.transform.LookAt(centerPoint.transform);
+			g.GetComponent<HexTile>().hexID = count;
+
+			grid.Add(g);
 		}
 	}
 

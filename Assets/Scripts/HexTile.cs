@@ -24,7 +24,7 @@ namespace AssemblyCSharp
 //		public Color [] colors;
 		public GameObject destructibleHexTile;
 		List<Building> buildings = new List<Building>();
-
+		public int hexID = -1;
 
 		void Start(){
 			GameObject parentGrid = GameObject.Find ("Grid");
@@ -51,6 +51,7 @@ namespace AssemblyCSharp
 
 		void OnMouseOver(){
 			//transform.localPosition += transform.forward * 0.1f;
+			Debug.Log (hexID);
 
 		}
 //		}
@@ -62,12 +63,12 @@ namespace AssemblyCSharp
 //
 		void OnMouseDown(){
 			Debug.Log ("click");
-			//destroyTile();
+			destroyTile();
 
 		}
 
 		public void destroyTile(){
-			GameObject.Destroy(this.gameObject);
+			Destroy(gameObject);
 			Instantiate (destructibleHexTile, transform.position, transform.rotation);
 
 		}
